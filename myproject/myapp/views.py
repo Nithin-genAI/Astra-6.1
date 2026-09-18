@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 
 def home(request):
-    return HttpResponse('Hello, Nithin!')
+    return render(request, 'welcome.html')
 
 def music(request):
     return HttpResponse('Hello,Welcome to my Music app!')
