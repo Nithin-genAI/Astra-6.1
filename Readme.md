@@ -1,1 +1,1 @@
-# Astra-6.1
+# Django Backend Developemnt - Batteries Included !
