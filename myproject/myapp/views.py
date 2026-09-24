@@ -9,5 +9,10 @@ def music(request):
     return HttpResponse('Hello,Welcome to my Music app!')
 
 def json_view(request):
-    return JsonResponse({'message': 'Hello, this is a JSON response from the json_view function.'})
+    data ={
+        "message": "Hello, this is a JSON response from the json_view function.",
+        "status": "Success",
+        "code": 200
+    }
+    return JsonResponse(data)
      
