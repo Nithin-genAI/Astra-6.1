@@ -19,8 +19,8 @@ if not settings.configured:
             # TODO: Both middleware classes below must be listed here, in the
             # correct order. Think about which one needs to be able to wrap
             # (and enrich) the response the other one produces.
-            "main.APIKeyMiddleware",
             "main.RequestMetadataMiddleware",
+            "main.APIKeyMiddleware",
         ],
         SECRET_KEY="not-a-secret",
         USE_TZ=True,
@@ -51,6 +51,42 @@ class APIKeyMiddleware:
 
 
 class RequestMetadataMiddleware:
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        # 1. On the way IN: Correlation ID & Start Time
+        header_id = request.headers.get("X-Correlation-ID")
+        if header_id:
+            request.correlation_id = header_id
+        else:
+            request.correlation_id = uuid.uuid4().hex
+
+        request.start_time = time.monotonic()
+
+        # Pass request down the chain
+        response = self.get_response(request)
+
+        # 2. On the way OUT: Response Headers & Duration
+        duration_ms = (time.monotonic() - request.start_time) * 1000
+        response["X-Correlation-ID"] = request.correlation_id
+        response["X-Response-Time-Ms"] = str(duration_ms)
+
+        # 3. Inject meta block if JSON response
+        content_type = response.get("Content-Type", "")
+        if content_type.startswith("application/json"):
+            data = json.loads(response.content)
+            data["meta"] = {
+                "correlation_id": request.correlation_id,
+                "duration_ms": duration_ms
+            }
+            response.content = json.dumps(data)
+            response["Content-Length"] = str(len(response.content))
+
+        return response
+        
+    
+            
     """
     TODO: Implement this middleware.
 
@@ -76,11 +112,6 @@ class RequestMetadataMiddleware:
     works if it is positioned correctly in MIDDLEWARE above.
     """
 
-    def __init__(self, get_response):
-        self.get_response = get_response
-
-    def __call__(self, request):
-        raise NotImplementedError("Implement RequestMetadataMiddleware.__call__")
 
 
 def calculate_view(request):
@@ -105,3 +136,15 @@ def calculate_view(request):
 urlpatterns = [
     path("calculate/", calculate_view),
 ]
+
+
+"""Yes, you nailed the mental model completely! Here is a quick breakdown to confirm your exact understanding:
+
+1. **On the way IN**: You attach `correlation_id` (either reusing the incoming `X-Correlation-ID` header or generating a fresh `uuid`) and `start_time` directly to the `request` object. This ensures traceability and enables duration tracking.
+2. **On the way OUT**:
+* **Headers**: You calculate the total time elapsed (`duration_ms`) and update the HTTP response headers (`X-Correlation-ID` and `X-Response-Time-Ms`).
+* **JSON Injection**: You check if the response is JSON (`Content-Type: application/json`). If yes, you parse the binary body into a Python dictionary (`json.loads`), inject the `meta` key containing `correlation_id` and `duration_ms` alongside existing data, convert it back to a JSON string (`json.dumps`), and update `Content-Length` so client parsers receive a valid payload.
+
+
+
+You've got the logic down 100%."""
