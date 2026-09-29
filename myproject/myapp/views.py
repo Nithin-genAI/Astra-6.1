@@ -11,7 +11,7 @@ def music(request):
 def json_view(request):
     data ={
         "message": "Hello, this is a JSON response from the json_view function.",
-        "status": "Success",
+        "status": "Success",       
         "code": 200
     }
     return JsonResponse(data)
