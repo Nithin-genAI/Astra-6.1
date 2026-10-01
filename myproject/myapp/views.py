@@ -16,3 +16,11 @@ def json_view(request):
     }
     return JsonResponse(data)
      
+#URL parameter captures user name and passes to view 
+def user_view(request, name):
+    return HttpResponse(f'Hello, {name}!')
+
+#Query parameter captures search query (additional parameter) and passes to view
+def search_view(request):
+    query = request.GET.get('q', '')
+    return HttpResponse(f'You searched for: {query}')

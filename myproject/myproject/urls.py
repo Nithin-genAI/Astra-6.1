@@ -22,4 +22,6 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('music/',views.music, name='music'),
     path('json/', views.json_view, name='json_view'),
+    path('user/<str:name>/', views.user_view, name='user_view'),
+    path('search/', views.search_view, name='search_view'),
 ]
