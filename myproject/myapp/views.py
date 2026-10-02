@@ -16,9 +16,11 @@ def json_view(request):
     }
     return JsonResponse(data)
      
-#URL parameter captures user name and passes to view 
+#URL parameter captures user name and passes to view
+# and also captures query parameter for favorite color and passes to view
 def user_view(request, name):
-    return HttpResponse(f'Hello, {name}!')
+    color = request.GET.get('color','')
+    return HttpResponse(f'Hello, {name}! Your favorite color is {color}.')
 
 #Query parameter captures search query (additional parameter) and passes to view
 def search_view(request):
