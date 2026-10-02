@@ -25,4 +25,5 @@ def user_view(request, name):
 #Query parameter captures search query (additional parameter) and passes to view
 def search_view(request):
     query = request.GET.get('q', '')
-    return HttpResponse(f'You searched for: {query}')
+    category = request.GET.get('category', 'all')
+    return HttpResponse(f'You searched for: {query} in category: {category}')
