@@ -27,3 +27,12 @@ def search_view(request):
     query = request.GET.get('q', '')
     category = request.GET.get('category', 'Programming')
     return HttpResponse(f'You searched for: {query} in category: {category}')
+
+#URL parameter captures superhero name and passes to view
+def superhero_view(request, hero_name):
+    return HttpResponse(f'{hero_name} is here to save the day!')
+        
+#Query parameter captures superhero power and passes to view
+def power_search_view(request):
+    power = request.GET.get('power', '')
+    return HttpResponse(f'You searched for the power: {power}')

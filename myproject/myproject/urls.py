@@ -24,4 +24,6 @@ urlpatterns = [
     path('json/', views.json_view, name='json_view'),
     path('user/<str:name>/', views.user_view, name='user_view'),
     path('search/', views.search_view, name='search_view'),
+    path('hero/<str:hero_name>/' , views.superhero_view, name='superhero_view'),
+    path('search_power/' ,views.power_search_view, name='power_search_view'),
 ]
