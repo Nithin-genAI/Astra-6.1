@@ -146,5 +146,4 @@ urlpatterns = [
 * **JSON Injection**: You check if the response is JSON (`Content-Type: application/json`). If yes, you parse the binary body into a Python dictionary (`json.loads`), inject the `meta` key containing `correlation_id` and `duration_ms` alongside existing data, convert it back to a JSON string (`json.dumps`), and update `Content-Length` so client parsers receive a valid payload.
 
 
-
-You've got the logic down 100%."""
+"""
