@@ -24,7 +24,7 @@ def user_view(request, name):
 
 #Query parameter captures search query (additional parameter) and passes to view
 def search_view(request):
-    query = request.GET.get('q', '')
+    query = request.GET.get('q', 'Coding')
     category = request.GET.get('category', 'Programming')
     return HttpResponse(f'You searched for: {query} in category: {category}')
 
@@ -34,5 +34,5 @@ def superhero_view(request, hero_name):
         
 #Query parameter captures superhero power and passes to view
 def power_search_view(request):
-    power = request.GET.get('power', '')
+    power = request.GET.get('power', 'Superman')
     return HttpResponse(f'You searched for the power: {power}')
