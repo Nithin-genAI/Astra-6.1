@@ -39,4 +39,5 @@ def power_search_view(request):
 
 #custom 404 error handler
 def custom_404(request, exception):
-    return HttpResponse('Hey there, page not found', status=404)
+    return render(request, '404.html', status=404)
+

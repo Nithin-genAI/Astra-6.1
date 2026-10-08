@@ -18,6 +18,8 @@ from django.contrib import admin
 from django.urls import path
 from myapp import views
 
+handler404 = 'myapp.views.custom_404'
+
 urlpatterns = [
     path('', views.home, name='home'),
     path('music/',views.music, name='music'),
@@ -27,5 +29,3 @@ urlpatterns = [
     path('hero/<str:hero_name>/' , views.superhero_view, name='superhero_view'),
     path('search_power/' ,views.power_search_view, name='power_search_view'),
 ]
-
-handler404 = 'myapp.views.custom_404'
