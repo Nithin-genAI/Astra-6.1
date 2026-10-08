@@ -27,3 +27,5 @@ urlpatterns = [
     path('hero/<str:hero_name>/' , views.superhero_view, name='superhero_view'),
     path('search_power/' ,views.power_search_view, name='power_search_view'),
 ]
+
+handler404 = 'myapp.views.custom_404'

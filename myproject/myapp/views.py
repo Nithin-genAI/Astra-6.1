@@ -36,3 +36,7 @@ def superhero_view(request, hero_name):
 def power_search_view(request):
     power = request.GET.get('power', 'Superman')
     return HttpResponse(f'You searched for the power: {power}')
+
+#custom 404 error handler
+def custom_404(request, exception):
+    return HttpResponse('Hey there, page not found', status=404)
