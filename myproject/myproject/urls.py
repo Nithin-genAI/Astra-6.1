@@ -28,4 +28,6 @@ urlpatterns = [
     path('search/', views.search_view, name='search_view'),
     path('hero/<str:hero_name>/' , views.superhero_view, name='superhero_view'),
     path('search_power/' ,views.power_search_view, name='power_search_view'),
+    path('get_items/',views.get_items,name='get_items'),
+    path('admin/', admin.site.urls),
 ]

@@ -1,6 +1,7 @@
 from django.shortcuts import render
 # project/myapp/views.py
 from django.http import HttpResponse , JsonResponse
+import sqlite3
 
 def home(request):
     return render(request, 'welcome.html')
@@ -40,4 +41,19 @@ def power_search_view(request):
 #custom 404 error handler
 def custom_404(request, exception):
     return render(request, '404.html', status=404)
+
+def get_items(request):
+    # Create a new SQLite connection for each request
+    connection = sqlite3.connect('db.sqlite3')
+    items = []
+    try:
+        # Retrieve items from database
+        raw_query = 'SELECT * FROM items'
+        items = connection.execute(raw_query).fetchall()
+
+    finally:
+        # Close the connection to ensure it is not reused
+        connection.close()
+
+    return HttpResponse(items)
 
