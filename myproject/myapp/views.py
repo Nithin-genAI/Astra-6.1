@@ -48,7 +48,7 @@ def get_items(request):
     items = []
     try:
         # Retrieve items from database
-        raw_query = 'SELECT * FROM items'
+        raw_query = "SELECT * FROM items WHERE name LIKE 'i%'"
         items = connection.execute(raw_query).fetchall()
 
     finally:
