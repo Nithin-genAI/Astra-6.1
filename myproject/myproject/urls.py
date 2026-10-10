@@ -30,4 +30,5 @@ urlpatterns = [
     path('search_power/' ,views.power_search_view, name='power_search_view'),
     path('get_items/',views.get_items,name='get_items'),
     path('admin/', admin.site.urls),
+    path('superheroes/', views.get_super_webslingers, name='superhero_view'),
 ]

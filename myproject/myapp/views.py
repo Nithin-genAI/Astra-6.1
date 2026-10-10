@@ -2,6 +2,8 @@ from django.shortcuts import render
 # project/myapp/views.py
 from django.http import HttpResponse , JsonResponse
 import sqlite3
+import os
+
 
 def home(request):
     return render(request, 'welcome.html')
@@ -56,4 +58,17 @@ def get_items(request):
         connection.close()
 
     return HttpResponse(items)
+
+#View to retrieve superheroes from the database
+def get_super_webslingers(request):
+    db_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'db.sqlite3')
+    connection = sqlite3.connect(db_path)
+    superheroes = []
+    try:
+        raw_query = "SELECT * FROM superheroes WHERE superpower='Web-slinging'"
+        superheroes = connection.execute(raw_query).fetchall()
+    finally:
+        connection.close()
+
+    return HttpResponse(superheroes)
 

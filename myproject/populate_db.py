@@ -21,3 +21,21 @@ try:
 finally:
     # Close the database connection
     connection.close()
+
+#Adding superheroes to the database
+connection = sqlite3.connect(db_path)   
+
+try:
+    # Create table if it doesn't exist
+    raw_query = 'CREATE TABLE IF NOT EXISTS superheroes (id INTEGER PRIMARY KEY, name TEXT, superpower TEXT)'
+    connection.execute(raw_query)
+
+    # Add superheroes to the database
+    superheroes = [('Spider-Man', 'Web-slinging'), ('Iron Man', 'Armor Suit'), ('Thor', 'God of Thunder')]
+    for hero in superheroes:
+        raw_query = f"INSERT INTO superheroes (name, superpower) VALUES ('{hero[0]}', '{hero[1]}')"
+        connection.execute(raw_query)
+    connection.commit()
+
+finally:
+    connection.close()
