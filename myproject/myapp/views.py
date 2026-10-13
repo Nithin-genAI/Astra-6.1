@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.http import HttpResponse , JsonResponse
 import sqlite3
 import os
+from .models import Item
 
 
 def home(request):
@@ -71,4 +72,12 @@ def get_super_webslingers(request):
         connection.close()
 
     return HttpResponse(superheroes)
+
+#View to add and get items from the class Item for the object name while interacting with Django models
+def add_and_get_items(request):
+    item = Item(name='Item 1')
+    item.save()
+
+    items = Item.objects.all()
+    return HttpResponse(items)
 
