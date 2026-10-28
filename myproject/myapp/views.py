@@ -75,7 +75,7 @@ def get_super_webslingers(request):
 
 #View to add and get items from the class Item for the object name while interacting with Django models
 def add_and_get_items(request):
-    item = Item(name='Item 1')
+    item = Item(name='Item 1', category='General')
     item.save()
 
     items = Item.objects.all()
