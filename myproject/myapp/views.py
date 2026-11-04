@@ -81,7 +81,5 @@ def add_and_get_items(request):
     items = Item.objects.all()
     return HttpResponse(items)
 
-#custom 404 error handler
-def custom_404(request, exception):
-    return render(request, '404.html', status=404)
+
 
