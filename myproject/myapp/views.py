@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.http import HttpResponse , JsonResponse
 import sqlite3
 import os
-from .models import Item
+from .models import Item , Song
 
 
 def home(request):
@@ -81,5 +81,10 @@ def add_and_get_items(request):
     items = Item.objects.all()
     return HttpResponse(items)
 
-
-
+#View to add and get songs from the class Song for the object title while interacting with Django models
+def add_and_get_songs(request):
+    song = Song(title="Song 1", artist="Artist 1")
+    song.save()
+    songs = Song.objects.all()
+    songs_str = ', '.join([str(song) for song in songs])
+    return HttpResponse(songs_str)
