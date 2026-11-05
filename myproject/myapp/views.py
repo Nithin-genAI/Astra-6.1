@@ -79,7 +79,8 @@ def add_and_get_items(request):
     item.save()
 
     items = Item.objects.all()
-    return HttpResponse(items)
+    items_str = ', '.join([str(item) for item in items])
+    return HttpResponse(items_str)
 
 #View to add and get songs from the class Song for the object title while interacting with Django models
 def add_and_get_songs(request):
