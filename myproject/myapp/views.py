@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.http import HttpResponse , JsonResponse
 import sqlite3
 import os
-from .models import Item , Song
+from .models import Item , Song , Artist
 
 
 def home(request):
@@ -89,3 +89,11 @@ def add_and_get_songs(request):
     songs = Song.objects.all()
     songs_str = ', '.join([str(song) for song in songs])
     return HttpResponse(songs_str)
+
+#View to add and get artists name , genre from the Artists Model
+def add_and_get_artists(request):
+    artist = Artist(name="Adele", genre="Pop")
+    artist.save()
+    artists = Artist.objects.all()
+    artist_list = list(artists.values('name', 'genre'))
+    return JsonResponse(artist_list, safe=False)
