@@ -21,3 +21,9 @@ class Artist(models.Model):
 
     def __str__(self):
         return f"{self.name} - {self.genre}"
+
+class Todo(models.Model):
+    task = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.task
