@@ -3,7 +3,10 @@ from django.shortcuts import render
 from django.http import HttpResponse , JsonResponse
 import sqlite3
 import os
-from .models import Item , Song , Artist
+from .models import Item , Song , Artist , Todo
+from django.views.decorators.csrf import csrf_exempt
+import json 
+
 
 
 def home(request):
@@ -97,3 +100,14 @@ def add_and_get_artists(request):
     artists = Artist.objects.all()
     artist_list = list(artists.values('name', 'genre'))
     return JsonResponse(artist_list, safe=False)
+
+
+#View to add and get tasks from the Todo Model
+@csrf_exempt
+def add_todo(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        new_todo = Todo(task=data['task'])
+        new_todo.save()
+        return JsonResponse({'id': new_todo.id, 'task': new_todo.task}, status=201)
+    return JsonResponse({'message': 'Invalid request'}, status=400)
