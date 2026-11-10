@@ -34,4 +34,5 @@ urlpatterns = [
     path('add-get/', views.add_and_get_items, name='add_and_get_items'),
     path('get-songs/', views.add_and_get_songs, name='add_and_get_songs'),
     path('add-get-artists/', views.add_and_get_artists, name='add_and_get_artists'),
+    path('add-todo/', views.add_todo, name='add_todo'),
 ]
